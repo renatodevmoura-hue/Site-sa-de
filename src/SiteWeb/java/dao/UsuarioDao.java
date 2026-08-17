@@ -77,4 +77,24 @@ public class UsuarioDao {
         return usuarios;
 
     }
+    public void atualizarUsuario(Usuario usuario){
+        String sql = "UPDATE usuario SET nome = ?, email = ?, idade = ?, sexo = ?, telefone = ?" +
+                "WHERE idUsuario = ?";
+        try(Connection conn = Conexao.conectar();
+        PreparedStatement st = conn.prepareStatement(sql)){
+            st.setString(1, usuario.getNome());
+            st.setString(2, usuario.getEmail());
+            st.setInt(3, usuario.getIdade());
+            st.setString(4, usuario.getSexo());
+            st.setString(5, usuario.getTelefone());
+            st.setInt(6, usuario.getIdUsuario());
+
+            st.executeUpdate();
+        }
+        catch (SQLException e ){
+            throw new RuntimeException("ERRO AO ATULAIZAR USUARIO");
+        }
+
+
+    }
 }

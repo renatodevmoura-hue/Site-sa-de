@@ -18,7 +18,8 @@ public class MenuUsuario {
 
             System.out.println("MENU DO USUÁRIO");
             System.out.println("DIGITE (1) PARA CADASTRAR USUÁRIO NO SISTEMA");
-            System.out.println("DIGITE (2) PARA LER USUÁRIOS DO SISTEMA");
+            System.out.println("DIGITE (2) PARA LER USUÁRIO DO SISTEMA");
+            System.out.println("DIGITE (3) ATUALIZAR USUÁRIO DO SISTEMA");
             System.out.println("APERTE (0) PARA ENCERRAR O SISTEMA");
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -29,6 +30,9 @@ public class MenuUsuario {
                     break;
                 case 2:
                     listaDeUsuario();
+                    break;
+                case 3:
+                    inserirAtualizacaoUsuario();
                     break;
 
                 case 0:
@@ -76,13 +80,51 @@ public class MenuUsuario {
 
 
     }
-    public void listaDeUsuario(){
 
-        List<Usuario> usuarios = usuarioDao.listarUsuario();
-        for(Usuario  usuario : usuarios){
-            System.out.println(usuario);
+    public void listaDeUsuario() {
+        try {
+            List<Usuario> usuarios = usuarioDao.listarUsuario();
+            for (Usuario usuario : usuarios) {
+                System.out.println(usuario);
+            }
+
+        }catch (RuntimeException e){
+            System.out.println("ERRO AO GERAR LISTA" +e.getMessage());
         }
 
     }
+    public void inserirAtualizacaoUsuario(){
 
-}
+        try {
+            System.out.println("INSIRA O IDENTIFICADOR DO USUÁRIO");
+            int idUsuario = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("DIGITE NOVO NOME DO USUÁRIO");
+            String nome = scanner.nextLine();
+
+            System.out.println("DIGITE NOVO EMAIL DO USUÁRIO");
+            String email = scanner.nextLine();
+
+
+            System.out.println("DIGITE NOVA IDADE DO USUÁRIO");
+            int idade = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("DIGITE NOVO SEXO DO USUÁRIO");
+            String sexo = scanner.nextLine();
+
+            System.out.println("DIGITE NOVO TELEFONE DO USUÁRIO");
+            String telefone = scanner.nextLine();
+
+            Usuario usuario = new Usuario(idUsuario, nome, email, idade, sexo, telefone);
+            usuarioDao.atualizarUsuario(usuario);
+
+        } catch (RuntimeException e) {
+            System.out.println("ERRO AO ATUALIZAR DADOS" + e.getMessage());
+            }
+        }
+
+
+
+    }

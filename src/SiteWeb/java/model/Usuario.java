@@ -30,7 +30,16 @@ public class Usuario {
             this.sexo = sexo;
             this.telefone = telefone;
 
-        }
+        }public Usuario(int idUsuario, String nome, String email,
+                        int idade, String sexo, String telefone){
+        this.idUsuario = idUsuario;
+        this.nome = nome;
+        this.email = email;
+        this.idade = idade;
+        this.sexo = sexo;
+        this.telefone = telefone;
+
+    }
 
         public int getIdUsuario(){
             return idUsuario;
