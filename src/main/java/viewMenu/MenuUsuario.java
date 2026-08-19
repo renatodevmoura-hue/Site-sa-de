@@ -20,6 +20,7 @@ public class MenuUsuario {
             System.out.println("DIGITE (1) PARA CADASTRAR USUÁRIO NO SISTEMA");
             System.out.println("DIGITE (2) PARA LER USUÁRIO DO SISTEMA");
             System.out.println("DIGITE (3) ATUALIZAR USUÁRIO DO SISTEMA");
+            System.out.println("DIGITE (4) DELETAR USUÁRIO DO SISTEMA");
             System.out.println("APERTE (0) PARA ENCERRAR O SISTEMA");
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -33,6 +34,9 @@ public class MenuUsuario {
                     break;
                 case 3:
                     inserirAtualizacaoUsuario();
+                    break;
+                case 4:
+                    deleteUsuario();
                     break;
 
                 case 0:
@@ -88,12 +92,13 @@ public class MenuUsuario {
                 System.out.println(usuario);
             }
 
-        }catch (RuntimeException e){
-            System.out.println("ERRO AO GERAR LISTA" +e.getMessage());
+        } catch (RuntimeException e) {
+            System.out.println("ERRO AO GERAR LISTA" + e.getMessage());
         }
 
     }
-    public void inserirAtualizacaoUsuario(){
+
+    public void inserirAtualizacaoUsuario() {
 
         try {
             System.out.println("INSIRA O IDENTIFICADOR DO USUÁRIO");
@@ -122,9 +127,31 @@ public class MenuUsuario {
 
         } catch (RuntimeException e) {
             System.out.println("ERRO AO ATUALIZAR DADOS" + e.getMessage());
-            }
         }
-
-
-
     }
+
+    public void deleteUsuario() {
+        try {
+            System.out.println("INSIRA O IDENTIFICADOR DO USUÁRIO PARA REMOÇÃO");
+            int idusuario = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.println("TEM CERTEZA QUE DESEJA DELETAR ( S/ N)");
+            String confirmacao = scanner.nextLine();
+            if (confirmacao.equalsIgnoreCase("s")) {
+                usuarioDao.deletarUsuario(idusuario);
+                System.out.println("USUÁRIO DELETADO");
+
+            } else {
+                System.out.println("OPERAÇÃO CANCELADA");
+
+            }
+
+
+        } catch (RuntimeException e) {
+            System.out.println("USUÁRIO NÃO ENCONTRADO");
+        }
+    }
+
+
+}

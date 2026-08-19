@@ -79,7 +79,7 @@ public class UsuarioDao {
     }
     public void atualizarUsuario(Usuario usuario){
         String sql = "UPDATE usuario SET nome = ?, email = ?, idade = ?, sexo = ?, telefone = ?" +
-                "WHERE idUsuario = ?";
+                " WHERE idUsuario = ?";
         try(Connection conn = Conexao.conectar();
         PreparedStatement st = conn.prepareStatement(sql)){
             st.setString(1, usuario.getNome());
@@ -92,9 +92,29 @@ public class UsuarioDao {
             st.executeUpdate();
         }
         catch (SQLException e ){
-            throw new RuntimeException("ERRO AO ATULAIZAR USUARIO");
+            throw new RuntimeException("ERRO AO ATULAIZAR USUARIO" , e);
         }
 
+
+
+    }
+    public void deletarUsuario(int idUsuario){
+        String sql = "DELETE FROM usuario WHERE idUsuario =? ";
+
+        try(
+                Connection conn = Conexao.conectar();
+                PreparedStatement st = conn.prepareStatement(sql)
+                ){
+            st.setInt(1, idUsuario);
+
+            int linhas = st.executeUpdate();
+
+            if(linhas == 0){
+                System.out.println("NENHUM USUÁRIO ENCONTRADO PARA APAGAR");
+            }
+        }catch (SQLException e){
+            throw new RuntimeException("ERRO AO DELETAR USUÁRIO" ,e);
+        }
 
     }
 }
